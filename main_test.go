@@ -284,7 +284,7 @@ func TestCreateRating(t *testing.T) {
 func TestCreateRatingWithoutProduct(t *testing.T) {
 	clearTables()
 
-	jsonStr := []byte(`{"product_id":1, "rating": 7, "rating_text": "Das isch jutesch Zeuch!"}`)
+	jsonStr := []byte(`{"product_id":1000, "rating": 7, "rating_text": "Das isch jutesch Zeuch!"}`)
 	req, _ := http.NewRequest("POST", "/rating", bytes.NewBuffer(jsonStr))
 	req.Header.Set("Content-Type", "application/json")
 

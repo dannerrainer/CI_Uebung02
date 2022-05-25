@@ -7,10 +7,32 @@ on:
     branches: [ master ]
 
 jobs:
-
-  build:
+  build_and_test:
+    env:
+      APP_DB_USERNAME: "postgres"
+      APP_DB_PASSWORD: "postgres"
+      APP_DB_NAME: "ci_uebung02"
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14.3
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ci_uebung02
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
+    - name: "Print envs"
+      run: echo "$APP_DB_USERNAME | $APP_DB_PASSWORD | $APP_DB_NAME"
+
     - uses: actions/checkout@v3
 
     - name: Set up Go
@@ -21,5 +43,5 @@ jobs:
     - name: Build
       run: go build -v ./...
 
-    - name: Test
+    - name: Run tests  with database
       run: go test -v ./...
