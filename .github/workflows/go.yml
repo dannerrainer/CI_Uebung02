@@ -30,9 +30,6 @@ jobs:
           --health-retries 5
 
     steps:
-    - name: "Print envs"
-      run: echo "$APP_DB_USERNAME | $APP_DB_PASSWORD | $APP_DB_NAME"
-
     - uses: actions/checkout@v3
 
     - name: Set up Go
